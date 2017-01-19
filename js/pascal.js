@@ -3,23 +3,24 @@
  * @param {string} zielBereich ist der Ort (die div) der HTML-seite wo das Dreieck angezeigt werden soll
  * */
 
-function printPascal(indexZeile, zielBereich)
-{
+function prPa(indexZeile, zielBereich){
     var aktuelleZeile = document.getElementById(indexZeile).value;//den vom benutzer gewuenschten wert ermitteln
     var pascal = computePascalDreieck(aktuelleZeile);
-    var lineToAdd = "";
-    var arr = String(pascal[aktuelleZeile - 1][Math.floor(aktuelleZeile /2)]).length; //2-dimensionaler array erstellen
-    for (var i = aktuelleZeile - 1; i >= 0; i--)
-    {
-        var lineToAdd = "&nbsp;".repeat((aktuelleZeile - i) * arr)
-        for (var j = 0; j <= i; j++)
-        {
-           lineToAdd += " " + "&nbsp;".repeat(arr - String(pascal[i][j]).length) 
-           + pascal[i][j] + "&nbsp;".repeat(arr - String(pascal[i][j]).length); 
+    var table = "<table>";
+    for (var b = 0; b < aktuelleZeile; b++){
+        table += "<tr>"
+        for(var i = 0; i < (aktuelleZeile- b); i++){
+            table += "<td> </td>";
         }
-        document.getElementById(zielBereich).innerHTML = "</br>" + lineToAdd 
-        + document.getElementById(zielBereich).innerHTML;
+        for (var j = 0; j <= b; j++){
+            table += "<td>" + pascal[b][j] +"</td>"
+            table += "<td>   </td>";
+        }
+        table += "</tr>\n" ;
+
     }
+    table += "</table>";
+    document.getElementById(zielBereich).innerHTML = table;
 }
 
 /**
@@ -53,5 +54,5 @@ function computePascalDreieck(aktuelleZeile){
 var button = document.getElementById("cal");
 button.onclick = function()
 {
-    printPascal("line", "pascal3");
+    prPa("line", "pascal3");
 };
